@@ -1,25 +1,30 @@
-FROM nvidia/cuda:10.1-devel-ubuntu18.04
+FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 MAINTAINER Masahiro Mochizuki <masahiro.mochizuki.dev@gmail.com>
 
 RUN apt-get update && \
-    apt-get install -y wget cmake build-essential zlib1g-dev locales sudo swig
+    apt-get install -y wget cmake build-essential zlib1g-dev locales sudo swig \
+    gfortran pkg-config libpng-dev libfreetype6-dev libboost-all-dev \
+    python3 python3-pip python3-dev
+RUN ln -sf /usr/bin/python3 /usr/bin/python && ln -s /usr/bin/pip3 /usr/bin/pip
+
+RUN wget --quiet https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB && \
+    apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB && rm GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB
+RUN wget https://apt.repos.intel.com/setup/intelproducts.list -O /etc/apt/sources.list.d/intelproducts.list 
+RUN apt-get update && apt-get install -y intel-mkl-2019.3-062
+ENV LD_LIBRARY_PATH "/opt/intel/mkl/lib/intel64:/opt/intel/lib/intel64:$LD_LIBRARY_PATH"
 
 RUN mkdir /.local && chmod o+w /.local
 RUN mkdir -p /etc/OpenCL/vendors && echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
 
 RUN groupadd user && \
     useradd  user -g user -G sudo -m
+
 USER user
 RUN mkdir /home/user/work && chmod o+w /home/user/work
-
 WORKDIR /tmp
 
-RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-    /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p /home/user/miniconda3 && \
-    rm Miniconda3-latest-Linux-x86_64.sh
-ENV PATH /home/user/miniconda3/bin:$PATH
 
-ADD environment.yml .
-RUN conda env update -f=environment.yml
-ENV BOOST_ROOT /home/user/miniconda3/
-RUN pip install lightgbm --install-option=--gpu --install-option="--opencl-include-dir=/usr/local/cuda/include/" --install-option="--opencl-library=/usr/local/cuda/lib64/libOpenCL.so"
+COPY .numpy-site.cfg /home/user/
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+# RUN python -c "import numpy as np; np.show_config()"
