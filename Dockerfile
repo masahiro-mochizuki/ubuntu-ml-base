@@ -16,15 +16,17 @@ ENV LD_LIBRARY_PATH "/opt/intel/mkl/lib/intel64:/opt/intel/lib/intel64:$LD_LIBRA
 RUN mkdir /.local && chmod o+w /.local
 RUN mkdir -p /etc/OpenCL/vendors && echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
 
-RUN groupadd user && \
-    useradd  user -g user -G sudo -m
 
-USER user
-RUN mkdir /home/user/work && chmod o+w /home/user/work
 WORKDIR /tmp
 
 
-COPY .numpy-site.cfg /home/user/
+COPY .numpy-site.cfg /root
 COPY requirements.txt .
 RUN pip install -r requirements.txt
+
+
+RUN groupadd user && \
+    useradd  user -g user -G sudo -m
+USER user
+RUN mkdir /home/user/work && chmod o+w /home/user/work
 # RUN python -c "import numpy as np; np.show_config()"
