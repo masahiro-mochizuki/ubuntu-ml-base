@@ -23,14 +23,6 @@ COPY .numpy-site.cfg /root
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# install faiss
-RUN wget https://github.com/facebookresearch/faiss/archive/v1.5.3.tar.gz &&\
-    tar xf v1.5.3.tar.gz
-RUN cd faiss-1.5.3 &&\
-    LDFLAGS=-L/opt/intel/mkl/lib/intel64 ./configure --with-cuda=/usr/local/cuda/ &&\
-    make && make install
-RUN cd faiss-1.5.3/python && make && make install
-
 RUN groupadd user && \
     useradd  user -g user -G sudo -m
 USER user
