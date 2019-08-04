@@ -20,6 +20,7 @@ RUN mkdir -p /etc/OpenCL/vendors && echo "libnvidia-opencl.so.1" > /etc/OpenCL/v
 WORKDIR /tmp
 
 COPY .numpy-site.cfg /root
+#RUN pip install --no-binary :all: numpy==1.16.2 scipy==1.2.1
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
