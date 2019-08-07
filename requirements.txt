@@ -8,15 +8,17 @@ seaborn==0.9.0
 networkx==2.2
 notebook==5.7.8
 --no-binary :all: numpy==1.16.2
+numpy==1.16.2
 pandas==0.24.2
 scikit-learn==0.21.2
 --no-binary :all: scipy==1.2.1
+scipy==1.2.1
 tqdm==4.31.1
 xlrd==1.2.0
 chainer==6.2.0
 cupy==6.2.0
 optuna==0.9.0
 Boruta==0.3
---no-binary :all: catboost=0.16.2
+#catboost==0.16.2
 # lightgbm seems to have to be in the last line because of the options.
 lightgbm==2.2.3 --install-option="--gpu" --install-option="--opencl-include-dir=/usr/local/cuda/include/" --install-option="--opencl-library=/usr/local/cuda/lib64/libOpenCL.so"
