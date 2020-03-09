@@ -1,4 +1,5 @@
 FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+#FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
 MAINTAINER Masahiro Mochizuki <masahiro.mochizuki.dev@gmail.com>
 
 RUN apt-get update && \
@@ -21,6 +22,7 @@ WORKDIR /tmp
 
 COPY .numpy-site.cfg /root
 COPY requirements.txt .
+RUN pip install torch==1.4.0+cu100 -f https://download.pytorch.org/whl/torch_stable.html
 RUN pip install -r requirements.txt
 RUN pip install catboost==0.16.2
 
@@ -31,3 +33,4 @@ RUN mkdir /home/user/work && chmod o+w /home/user/work
 #RUN pip freeze
 #RUN python -c "import numpy as np; np.show_config()"
 #RUN python -c "import lightgbm"
+RUN python -c "import torch"
