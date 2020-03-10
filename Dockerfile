@@ -33,4 +33,4 @@ RUN mkdir /home/user/work && chmod o+w /home/user/work
 #RUN pip freeze
 #RUN python -c "import numpy as np; np.show_config()"
 #RUN python -c "import lightgbm"
-RUN python -c "import torch"
+#RUN python -c "import torch"
