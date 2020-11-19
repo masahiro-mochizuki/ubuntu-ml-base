@@ -12,7 +12,8 @@ RUN ln -sf /usr/bin/python3 /usr/bin/python && ln -s /usr/bin/pip3 /usr/bin/pip
 RUN wget --quiet https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB && \
     apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB && rm GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB
 RUN wget https://apt.repos.intel.com/setup/intelproducts.list -O /etc/apt/sources.list.d/intelproducts.list 
-RUN apt-get update && apt-get install -y intel-mkl-2019.3-062
+RUN apt-get update && apt-get install -y --no-install-recommends intel-mkl-2019.3-062
+RUN apt-get -y clean && rm -rf /var/lib/apt/lists/
 ENV LD_LIBRARY_PATH "/opt/intel/mkl/lib/intel64:/opt/intel/lib/intel64:$LD_LIBRARY_PATH"
 
 RUN mkdir /.local && chmod o+w /.local
