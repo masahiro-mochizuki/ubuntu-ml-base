@@ -1,11 +1,8 @@
 zipp==1.2.0
 pip==20.3.3
-#setuptools
 wheel==0.33.4
 ipython==7.4.0
 cython==0.29.21
-#jupyter==1.0.0
-#notebook==6.1.6
 jupyterlab
 matplotlib==3.0.3
 seaborn==0.9.0
@@ -13,14 +10,14 @@ networkx==2.2
 --no-binary :all: numpy==1.19.4
 numpy==1.19.4
 pandas==1.2.0
-scikit-learn==0.21.2
+scikit-learn==0.23.2
 --no-binary :all: scipy==1.2.1
 scipy==1.2.1
 tqdm==4.31.1
 xlrd==1.2.0
 pytorch-ignite==0.3.0
-optuna==0.9.0
-Boruta==0.3
+colorama==0.3.9
+optuna==2.3.0
 #catboost==0.16.2
 # lightgbm seems to have to be in the last line because of the options.
 lightgbm==2.2.3 --install-option="--gpu" --install-option="--opencl-include-dir=/usr/local/cuda/include/" --install-option="--opencl-library=/usr/local/cuda/lib64/libOpenCL.so"
