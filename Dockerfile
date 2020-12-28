@@ -1,12 +1,15 @@
-FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
-#FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
+#FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+FROM nvidia/cuda:11.0-devel-ubuntu20.04
 MAINTAINER Masahiro Mochizuki <masahiro.mochizuki.dev@gmail.com>
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     wget cmake build-essential zlib1g-dev locales sudo swig \
     gfortran pkg-config libpng-dev libfreetype6-dev libboost-all-dev \
-    python3 python3-pip python3-dev python3-setuptools
+    python3.7 python3-pip python3-dev python3-setuptools \
+    libffi-dev
 RUN ln -sf /usr/bin/python3 /usr/bin/python && ln -s /usr/bin/pip3 /usr/bin/pip
 
 RUN wget --quiet https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB && \
@@ -21,8 +24,8 @@ RUN mkdir -p /etc/OpenCL/vendors && echo "libnvidia-opencl.so.1" > /etc/OpenCL/v
 WORKDIR /tmp
 
 COPY .numpy-site.cfg /root
+RUN pip install torch==1.7.1+cu110 -f https://download.pytorch.org/whl/torch_stable.html
 COPY requirements.txt .
-RUN pip install torch==1.4.0+cu100 -f https://download.pytorch.org/whl/torch_stable.html
 RUN pip install -r requirements.txt
 #RUN pip install catboost==0.16.2
 

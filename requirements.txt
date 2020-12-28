@@ -1,25 +1,23 @@
 zipp==1.2.0
-#torch==1.4.0+cu100
-pip==20.0.2
+pip==20.3.3
 #setuptools
 wheel==0.33.4
 ipython==7.4.0
-cython==0.29.10
-jupyter==1.0.0
+cython==0.29.21
+#jupyter==1.0.0
+#notebook==6.1.6
+jupyterlab
 matplotlib==3.0.3
 seaborn==0.9.0
 networkx==2.2
-notebook==5.7.8
---no-binary :all: numpy==1.16.2
-numpy==1.16.2
-pandas==0.24.2
+--no-binary :all: numpy==1.19.4
+numpy==1.19.4
+pandas==1.2.0
 scikit-learn==0.21.2
 --no-binary :all: scipy==1.2.1
 scipy==1.2.1
 tqdm==4.31.1
 xlrd==1.2.0
-#chainer==6.2.0
-#cupy==6.2.0
 pytorch-ignite==0.3.0
 optuna==0.9.0
 Boruta==0.3
