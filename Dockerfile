@@ -1,6 +1,5 @@
 FROM nvidia/cuda:11.3.0-devel-ubuntu20.04
 MAINTAINER Masahiro Mochizuki <masahiro.mochizuki.dev@gmail.com>
-
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     wget cmake build-essential zlib1g-dev locales sudo swig \
@@ -16,7 +15,6 @@ RUN mkdir -p /etc/OpenCL/vendors && echo "libnvidia-opencl.so.1" > /etc/OpenCL/v
 WORKDIR /tmp
 
 COPY requirements.txt .
-RUN pip install torch==1.4.0+cu100 -f https://download.pytorch.org/whl/torch_stable.html
 RUN pip install -r requirements.txt
 RUN pip install lightgbm==3.2.1 --install-option="--gpu" --install-option="--opencl-include-dir=/usr/local/cuda/include/" --install-option="--opencl-library=/usr/local/cuda/lib64/libOpenCL.so"
 #RUN pip install catboost==0.16.2
